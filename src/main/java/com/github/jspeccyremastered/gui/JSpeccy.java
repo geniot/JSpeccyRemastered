@@ -27,6 +27,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -435,58 +436,53 @@ public class JSpeccy extends javax.swing.JFrame {
     }
 
     private void saveSettings() {
-        JSpeccySettings toSave = null;
+        settings.getRecentFile().clear();
+        for (int idx = 0; idx < recentFilesMgr.size(); idx++) {
+            settings.getRecentFile().add(recentFilesMgr.getAbsolutePath(idx));
+        }
+
+        if (currentFileSnapshot != null)
+            settings.setLastSnapshotDir(currentFileSnapshot.getParent());
+
+        if (currentFileTape != null)
+            settings.setLastTapeDir(currentFileTape.getParent());
+
+        int filterM = 0, zoomM = 0;
+
+        if (palTvFilter.isSelected()) {
+            filterM = 1;
+        }
+
+        if (rgbFilter.isSelected()) {
+            filterM = 2;
+        }
+
+        if (bilinearZoom.isSelected()) {
+            zoomM = 1;
+        }
+
+        if (bicubicZoom.isSelected()) {
+            zoomM = 2;
+        }
+
+        settings.setZoomMethod(zoomM);
+        settings.setFilterMethod(filterM);
+        settings.setScanLines(scanlinesFilter.isSelected());
+
+        settings.setBorderSize(jscr.getBorderMode());
+
+        settings.setZoomed(jscr.isZoomed());
+
         if (settings.isAutosaveConfigOnExit()) {
             try {
                 FileOutputStream fos = new FileOutputStream(System.getProperty("user.home") + "/." + settings.getAppname());
                 Properties props = settings.getProperties();
-                props.store(fos,"");
+                props.store(fos, "");
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-        }
 
-        if (toSave == null)
-            return;
-
-        toSave.getRecentFile().clear();
-        for (int idx = 0; idx < recentFilesMgr.size(); idx++) {
-            toSave.getRecentFile().add(recentFilesMgr.getAbsolutePath(idx));
-        }
-
-        if (currentFileSnapshot != null)
-            toSave.setLastSnapshotDir(currentFileSnapshot.getParent());
-
-        if (currentFileTape != null)
-            toSave.setLastTapeDir(currentFileTape.getParent());
-
-        if (clo == null) {
-            int filterM = 0, zoomM = 0;
-
-            if (palTvFilter.isSelected()) {
-                filterM = 1;
-            }
-
-            if (rgbFilter.isSelected()) {
-                filterM = 2;
-            }
-
-            if (bilinearZoom.isSelected()) {
-                zoomM = 1;
-            }
-
-            if (bicubicZoom.isSelected()) {
-                zoomM = 2;
-            }
-
-            toSave.setZoomMethod(zoomM);
-            toSave.setFilterMethod(filterM);
-            toSave.setScanLines(scanlinesFilter.isSelected());
-
-            toSave.setBorderSize(jscr.getBorderMode());
-
-            toSave.setZoomed(jscr.isZoomed());
         }
     }
 
@@ -2024,7 +2020,7 @@ public class JSpeccy extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setLocation(settings.getWindowx(),settings.getWindowy());
+        setLocation(settings.getWindowx(), settings.getWindowy());
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

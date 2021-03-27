@@ -12,10 +12,7 @@ package com.github.jspeccyremastered.gui;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class JSpeccySettings {
 
@@ -77,7 +74,7 @@ public class JSpeccySettings {
     protected int soundMode;
 
     //RecentFilesType
-    protected List<String> recentFile = new ArrayList<String>();
+    protected List<String> recentFile = new LinkedList<String>();
     protected String lastSnapshotDir;
     protected String lastTapeDir;
 
@@ -571,7 +568,7 @@ public class JSpeccySettings {
                     } else if (f.get(this) instanceof Byte) {
                         f.set(this, Byte.valueOf(props.getProperty(f.getName())));
                     } else if (f.get(this) instanceof List) {
-                        f.set(this, Arrays.asList(props.getProperty(f.getName()).split(":")));
+                        f.set(this, new LinkedList(Arrays.asList(props.getProperty(f.getName()).split(":"))));
                     } else {
                         f.set(this, props.getProperty(f.getName()));
                     }
