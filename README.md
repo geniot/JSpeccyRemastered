@@ -29,7 +29,7 @@ You need to have installed Java 8. Run with:
 
 **java -jar JSpeccy.jar**
 
-A configuration file named JSpeccy.xml will be created on the user directory.
+A com.github.jspeccyremastered.configuration file named JSpeccy.xml will be created on the user directory.
 
 On Unix/Linux platforms using X11, Java 8 have a bug redrawing the screen. Java 8 use
 the XRender extension by default and this causes some problems. To resolve it, you can
