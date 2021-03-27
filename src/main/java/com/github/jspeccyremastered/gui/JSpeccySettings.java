@@ -74,7 +74,7 @@ public class JSpeccySettings {
     protected int soundMode;
 
     //RecentFilesType
-    protected List<String> recentFile = new LinkedList<String>();
+    protected List<String> recentFile = new LinkedList<>();
     protected String lastSnapshotDir;
     protected String lastTapeDir;
 
@@ -568,7 +568,7 @@ public class JSpeccySettings {
                     } else if (f.get(this) instanceof Byte) {
                         f.set(this, Byte.valueOf(props.getProperty(f.getName())));
                     } else if (f.get(this) instanceof List) {
-                        f.set(this, new LinkedList(Arrays.asList(props.getProperty(f.getName()).split(":"))));
+                        f.set(this, new LinkedList<>(Arrays.asList(props.getProperty(f.getName()).split(":"))));
                     } else {
                         f.set(this, props.getProperty(f.getName()));
                     }
@@ -579,6 +579,7 @@ public class JSpeccySettings {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public Properties getProperties() {
         Properties props = new Properties();
         Field[] fields = this.getClass().getDeclaredFields();
