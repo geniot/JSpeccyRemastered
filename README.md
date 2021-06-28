@@ -1,4 +1,4 @@
-Main differences from the original JSpeccy project by jsanchezv are:
+Main differences from the original JSpeccy https://github.com/jsanchezv/JSpeccy project by jsanchezv are:
 * replaced JAXB with standard properties loading routines
 * replaced ANT with Maven, as such the project structure is changed
 * removed any mentioning of nbproject
